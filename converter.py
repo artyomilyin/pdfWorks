@@ -6,6 +6,8 @@ from datetime import datetime
 
 
 SUPPORTED_IMAGE_FILE_FORMATS = ['.jpg', '.png']
+a4inpt = (img2pdf.mm_to_pt(210),img2pdf.mm_to_pt(297))
+layout_fun = img2pdf.get_layout_fun(a4inpt)
 
 
 INPUT_LIST = []
@@ -23,7 +25,7 @@ for file in INPUT_LIST:
     if file.endswith(tuple(SUPPORTED_IMAGE_FILE_FORMATS)):
         new_filename = os.path.join("temp", file+'.pdf')
         with open(os.path.join("input", file), 'rb') as r, open(new_filename, 'wb') as w:
-            w.write(img2pdf.convert(r))
+            w.write(img2pdf.convert(r, layout_fun=layout_fun))
         FINAL_LIST.append(new_filename)
 
     if file.endswith('.pdf'):
