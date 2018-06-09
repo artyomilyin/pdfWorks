@@ -1,27 +1,46 @@
 from fpdf import FPDF
 from PyPDF2 import PdfFileMerger
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font('Arial', 'B', 16)
-pdf.cell(40, 10, 'Hello World!')
-pdf.cell(60, 10, 'Powered by FPDF.', 0, 1, 'C')
-pdf.cell(60, 10, 'Powered by FPDF.', 0, 1, 'C')
-pdf.cell(60, 10, 'Powered by FPDF.', 0, 1, 'C')
-pdf.output('output/'
-           'tuto1.pdf', 'F')
-pdf = FPDF()
-pdf.add_page()
-pdf.set_font('Arial', 'B', 16)
-pdf.cell(40, 10, 'Hello 2 World!')
-pdf.cell(60, 10, 'Powered by 2 FPDF.', 0, 1, 'C')
-pdf.cell(60, 10, 'Powered by 2 FPDF.', 0, 1, 'C')
-pdf.cell(60, 10, 'Powered by 2 FPDF.', 0, 1, 'C')
-pdf.output('output/'
-           'tuto2.pdf', 'F')
+import img2pdf
+import os, shutil
+from datetime import datetime
+
+
+SUPPORTED_IMAGE_FILE_FORMATS = ['.jpg', '.png']
+
+
+INPUT_LIST = []
+FINAL_LIST = []
+FILE_HANDLES = []
+
+if not os.path.exists('temp'):
+    os.makedirs('temp')
+
+for file in os.listdir("input"):
+    if file.lower().endswith(tuple(SUPPORTED_IMAGE_FILE_FORMATS+['.pdf'])):
+        INPUT_LIST.append(file.lower())
+
+for file in INPUT_LIST:
+    if file.endswith(tuple(SUPPORTED_IMAGE_FILE_FORMATS)):
+        new_filename = os.path.join("temp", file+'.pdf')
+        with open(os.path.join("input", file), 'rb') as r, open(new_filename, 'wb') as w:
+            w.write(img2pdf.convert(r))
+        FINAL_LIST.append(new_filename)
+
+    if file.endswith('.pdf'):
+        FINAL_LIST.append(os.path.join("input", file))
 
 merger = PdfFileMerger()
-input1 = open('output/tuto1.pdf', 'rb')
-input2 = open('output/tuto2.pdf', 'rb')
-merger.append(input1)
-merger.append(input2)
-merger.write(open('output/global.pdf', 'wb'))
+
+for file in FINAL_LIST:
+    FILE_HANDLES.append(open(file, 'rb'))
+    merger.append(FILE_HANDLES[-1])
+
+with open('output/'+datetime.strftime(datetime.now(), '%Y%B%d_%H%M%S')+'.pdf', 'wb') as w:
+    merger.write(w)
+
+for handle in FILE_HANDLES:
+    handle.close()
+
+shutil.rmtree('temp', ignore_errors=True)
+
+
