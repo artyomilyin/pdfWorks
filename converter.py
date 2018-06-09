@@ -16,14 +16,14 @@ FILE_HANDLES = []
 if not os.path.exists('temp'):
     os.makedirs('temp')
 
-for file in os.listdir("input"):
+for file in os.listdir("INPUT"):
     if file.lower().endswith(tuple(SUPPORTED_IMAGE_FILE_FORMATS+['.pdf'])):
         INPUT_LIST.append(file.lower())
 
 for file in INPUT_LIST:
     if file.endswith(tuple(SUPPORTED_IMAGE_FILE_FORMATS)):
         new_filename = os.path.join("temp", file+'.pdf')
-        with open(os.path.join("input", file), 'rb') as r, open(new_filename, 'wb') as w:
+        with open(os.path.join("INPUT", file), 'rb') as r, open(new_filename, 'wb') as w:
             w.write(img2pdf.convert(r, layout_fun=layout_fun))
         FINAL_LIST.append(new_filename)
 
@@ -36,7 +36,7 @@ for file in FINAL_LIST:
     FILE_HANDLES.append(open(file, 'rb'))
     merger.append(FILE_HANDLES[-1])
 
-with open('output/'+datetime.strftime(datetime.now(), '%Y%B%d_%H%M%S')+'.pdf', 'wb') as w:
+with open('OUTPUT/'+datetime.strftime(datetime.now(), '%Y%B%d_%H%M%S')+'.pdf', 'wb') as w:
     merger.write(w)
 
 for handle in FILE_HANDLES:
