@@ -1,4 +1,3 @@
-from fpdf import FPDF
 from PyPDF2 import PdfFileMerger
 import img2pdf
 import os, shutil
