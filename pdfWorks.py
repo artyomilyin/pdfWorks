@@ -22,9 +22,6 @@ class MainScreen(GridLayout):
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
         self.cols = 2
-        btn = Button(text="kek")
-        btn.bind(on_press=self.on_event)
-        #self.add_widget(btn)
 
 
 class PdfWorksApp(App):
