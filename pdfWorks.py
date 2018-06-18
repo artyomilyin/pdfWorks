@@ -15,6 +15,7 @@ class MainScreen(GridLayout):
 
     def on_event(self):
         print("hey")
+        self.converter.convert()
 
     def update(self, dt):
         pass
