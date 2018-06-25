@@ -6,7 +6,6 @@ from kivy.properties import ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.factory import Factory
 from kivy.config import Config
-from kivy.uix.button import Button
 import os
 
 from converter import Converter
@@ -37,13 +36,13 @@ class MainScreen(GridLayout):
 
     def show_load(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Load file", content=content,
+        self._popup = Popup(title="Выбрать файлы", content=content,
                             size_hint=(0.9, 0.9))
         self._popup.open()
 
     def show_save(self):
         content = SaveDialog(save=self.save, cancel=self.dismiss_popup)
-        self._popup = Popup(title="Save file", content=content,
+        self._popup = Popup(title="Сохранить файл", content=content,
                             size_hint=(0.9, 0.9))
         self._popup.open()
 
@@ -59,16 +58,12 @@ class MainScreen(GridLayout):
 
         self.dismiss_popup()
 
-    def on_event(self):
-        print("hey")
-        self.converter.convert()
-
     def update(self, dt):
         pass
 
     def __init__(self, **kwargs):
         super(MainScreen, self).__init__(**kwargs)
-        self.cols = 2
+        self.cols = 1
 
 
 class PdfWorksApp(App):

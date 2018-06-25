@@ -6,12 +6,14 @@ MainScreen:
         orientation: 'vertical'
         BoxLayout:
             size_hint_y: None
-            height: 30
+            height: 80
+            width: 300
+            orientation: 'vertical'
             Button:
-                text: 'Load'
+                text: 'Выбрать файлы'
                 on_release: root.show_load()
             Button:
-                text: 'Save'
+                text: 'Сохранить'
                 on_release: root.show_save()
 
 <LoadDialog>:
@@ -27,11 +29,11 @@ MainScreen:
             size_hint_y: None
             height: 30
             Button:
-                text: "Cancel"
+                text: 'Отмена'
                 on_release: root.cancel()
 
             Button:
-                text: "Load"
+                text: 'Выбрать'
                 on_release: root.load(filechooser.path, filechooser.selection)
 
 <SaveDialog>:
@@ -55,9 +57,9 @@ MainScreen:
             size_hint_y: None
             height: 30
             Button:
-                text: "Cancel"
+                text: 'Отмена'
                 on_release: root.cancel()
 
             Button:
-                text: "Save"
+                text: 'Сохранить'
                 on_release: root.save(filechooser.path, text_input.text)
