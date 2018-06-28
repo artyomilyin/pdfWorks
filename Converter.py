@@ -7,14 +7,17 @@ from datetime import datetime
 class Converter:
 
     SUPPORTED_IMAGE_FILE_FORMATS = ['.jpg', '.png']
-    a4inpt = (img2pdf.mm_to_pt(210), img2pdf.mm_to_pt(297))
-    layout_fun = img2pdf.get_layout_fun(a4inpt)
 
-    INPUT_LIST = []
-    FINAL_LIST = []
-    FILE_HANDLES = []
+    def files_chosen(self):
+        if self.input_files is not None:
+            return True
+        else:
+            return False
 
-    def convert(self, layout_fun=layout_fun):
+    def set_input_files(self, files_list):
+        pass
+
+    def convert(self):
 
         if not os.path.exists('temp'):
             os.makedirs('temp')
@@ -28,7 +31,7 @@ class Converter:
                 new_filename = os.path.join("temp", file+'.pdf')
                 with open(os.path.join("INPUT", file), 'rb') as r, open(new_filename, 'wb') as w:
                     try:
-                        w.write(img2pdf.convert(r, layout_fun=layout_fun))
+                        w.write(img2pdf.convert(r, layout_fun=self.layout_fun))
                     except TypeError as e:
                         print(e)
                 self.FINAL_LIST.append(new_filename)
@@ -49,6 +52,14 @@ class Converter:
             handle.close()
 
         shutil.rmtree('temp', ignore_errors=True)
+
+    def __init__(self):
+        self.input_files = None
+        self.a4inpt = (img2pdf.mm_to_pt(210), img2pdf.mm_to_pt(297))
+        self.layout_fun = img2pdf.get_layout_fun(self.a4inpt)
+        self.FILE_HANDLES = []
+        self.FINAL_LIST = []
+        self.INPUT_LIST = []
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ from kivy.factory import Factory
 from kivy.config import Config
 import os
 
-from converter import Converter
+from Converter import Converter
 
 
 kivy.require('1.10.0')
