@@ -15,18 +15,18 @@ class Converter:
             return False
 
     def set_input_files(self, files_list):
-        pass
 
-    def convert(self):
+        # check that all the files are good to convert (datatypes)
 
         if not os.path.exists('temp'):
             os.makedirs('temp')
 
-        for file in os.listdir("INPUT"):
-            if file.lower().endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS+['.pdf'])):
-                self.INPUT_LIST.append(file.lower())
+        #for file in os.listdir("INPUT"):
+        #    if file.lower().endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS+['.pdf'])):
+        #        self.INPUT_LIST.append(file.lower())
 
-        for file in self.INPUT_LIST:
+        # for file in self.INPUT_LIST:
+        for file in files_list:
             if file.endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS)):
                 new_filename = os.path.join("temp", file+'.pdf')
                 with open(os.path.join("INPUT", file), 'rb') as r, open(new_filename, 'wb') as w:
@@ -38,6 +38,13 @@ class Converter:
 
             if file.endswith('.pdf'):
                 self.FINAL_LIST.append(os.path.join("input", file))
+
+        print(self.FINAL_LIST)
+
+    def convert(self, filename):
+
+        #self.set_input_files(None)
+        print("filename to save:", filename)
 
         merger = PdfFileMerger()
 

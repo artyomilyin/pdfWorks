@@ -8,13 +8,16 @@ class PdfWorks(Frame):
 
     def show_load_dialog(self):
 
-        filename = askopenfilenames() # show an "Open" dialog box and return the path to the selected file
-        print(filename)
+        # TODO set datatypes supported (from Converter class)
+        files_list = askopenfilenames()
+        self.converter.set_input_files(files_list)
 
     def show_save_dialog(self):
 
-        filename = asksaveasfilename() # show an "Open" dialog box and return the path to the selected file
-        print(filename)
+        # TODO check if dialog was just closed
+
+        filename = asksaveasfilename(**self.save_options)
+        self.converter.convert(filename)
 
     def __init__(self, master=None):
 
@@ -26,6 +29,9 @@ class PdfWorks(Frame):
         self.convertButton.grid()
 
         self.converter = Converter()
+        self.save_options = dict(defaultextension='.pdf',
+                                 filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
+        # TODO add open_options
 
 
 if __name__ == "__main__":
