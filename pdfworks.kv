@@ -10,10 +10,10 @@ MainScreen:
             width: 300
             orientation: 'vertical'
             Button:
-                text: 'Выбрать файлы'
+                text: 'Р’С‹Р±СЂР°С‚СЊ С„Р°Р№Р»С‹'
                 on_release: root.show_load()
             Button:
-                text: 'Сохранить'
+                text: 'РЎРѕС…СЂР°РЅРёС‚СЊ'
                 on_release: root.show_save()
 
 <LoadDialog>:
@@ -29,11 +29,11 @@ MainScreen:
             size_hint_y: None
             height: 30
             Button:
-                text: 'Отмена'
+                text: 'РћС‚РјРµРЅР°'
                 on_release: root.cancel()
 
             Button:
-                text: 'Выбрать'
+                text: 'Р’С‹Р±СЂР°С‚СЊ'
                 on_release: root.load(filechooser.path, filechooser.selection)
 
 <SaveDialog>:
@@ -57,9 +57,9 @@ MainScreen:
             size_hint_y: None
             height: 30
             Button:
-                text: 'Отмена'
+                text: 'РћС‚РјРµРЅР°'
                 on_release: root.cancel()
 
             Button:
-                text: 'Сохранить'
+                text: 'РЎРѕС…СЂР°РЅРёС‚СЊ'
                 on_release: root.save(filechooser.path, text_input.text)
