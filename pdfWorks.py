@@ -51,3 +51,6 @@ if __name__ == "__main__":
 
     pdfworks = PdfWorks()
     pdfworks.mainloop()
+    # TODO: разделение pdf на разные страницы
+    # TODO: несколько вкладок (по функциям)
+

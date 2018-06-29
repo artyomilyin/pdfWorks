@@ -1,6 +1,8 @@
 from PyPDF2 import PdfFileMerger
 import img2pdf
-import os, shutil
+import os
+import shutil
+from datetime import datetime
 
 
 class Converter:
@@ -60,5 +62,5 @@ class Converter:
 
 
 if __name__ == '__main__':
-    Converter().convert()
+    Converter().convert('OUTPUT/'+datetime.strftime(datetime.now(), '%Y%B%d_%H%M%S')+'.pdf')
 
