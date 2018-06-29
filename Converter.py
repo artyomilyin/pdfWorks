@@ -1,7 +1,6 @@
 from PyPDF2 import PdfFileMerger
 import img2pdf
 import os, shutil
-from datetime import datetime
 
 
 class Converter:
@@ -15,17 +14,11 @@ class Converter:
             return False
 
     def set_input_files(self, files_list):
-
-        # check that all the files are good to convert (datatypes)
+        print("came to set_input_files():", files_list)
 
         if not os.path.exists('temp'):
             os.makedirs('temp')
 
-        #for file in os.listdir("INPUT"):
-        #    if file.lower().endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS+['.pdf'])):
-        #        self.INPUT_LIST.append(file.lower())
-
-        # for file in self.INPUT_LIST:
         for file in files_list:
             if file.endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS)):
                 new_filename = os.path.join("temp", file+'.pdf')
@@ -39,11 +32,8 @@ class Converter:
             if file.endswith('.pdf'):
                 self.FINAL_LIST.append(os.path.join("input", file))
 
-        print(self.FINAL_LIST)
-
     def convert(self, filename):
 
-        #self.set_input_files(None)
         print("filename to save:", filename)
 
         merger = PdfFileMerger()
@@ -52,7 +42,7 @@ class Converter:
             self.FILE_HANDLES.append(open(file, 'rb'))
             merger.append(self.FILE_HANDLES[-1])
 
-        with open('OUTPUT/'+datetime.strftime(datetime.now(), '%Y%B%d_%H%M%S')+'.pdf', 'wb') as w:
+        with open(filename, 'wb') as w:
             merger.write(w)
 
         for handle in self.FILE_HANDLES:

@@ -23,20 +23,19 @@ class PdfWorks(Frame):
 
     def show_save_dialog(self):
 
-        # TODO check if dialog was just closed
-
         filename = asksaveasfilename(**self.save_options)
-        self.converter.convert(filename)
+        if filename:
+            self.converter.convert(filename)
 
     def __init__(self, master=None):
 
-        Frame.__init__(self, master)
+        Frame.__init__(self, master, width=230)
         self.grid()
         self.files_list = None
         self.loadButton = Button(master, text="Выбрать файлы", command=self.show_load_dialog)
-        self.loadButton.grid()
+        self.loadButton.grid(sticky="we")
         self.convertButton = Button(master, text="Конвертировать", command=self.show_save_dialog, state='disabled')
-        self.convertButton.grid()
+        self.convertButton.grid(sticky="we")
 
         self.converter = Converter()
         self.save_options = dict(defaultextension='.pdf',
@@ -46,7 +45,9 @@ class PdfWorks(Frame):
 
 if __name__ == "__main__":
 
-    Tk().iconbitmap(r'assets\favicon.ico')
+    root = Tk()
+    root.iconbitmap(r'assets\favicon.ico')
+    root.title("PDF Works")
 
     pdfworks = PdfWorks()
     pdfworks.mainloop()
