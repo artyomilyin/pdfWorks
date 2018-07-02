@@ -1,7 +1,8 @@
-from PyPDF2 import PdfFileMerger
+from PyPDF2 import PdfFileMerger, PdfFileWriter, PdfFileReader
 import img2pdf
 import os
 import shutil
+import ntpath
 from datetime import datetime
 
 
@@ -16,7 +17,6 @@ class Converter:
             return False
 
     def set_input_files(self, files_list):
-        print("came to set_input_files():", files_list)
 
         if not os.path.exists('temp'):
             os.makedirs('temp')
@@ -36,8 +36,6 @@ class Converter:
 
     def convert(self, filename):
 
-        print("filename to save:", filename)
-
         merger = PdfFileMerger()
 
         for file in self.FINAL_LIST:
@@ -51,6 +49,22 @@ class Converter:
             handle.close()
 
         shutil.rmtree('temp', ignore_errors=True)
+
+    def split(self, filename, folder):
+
+        with open(filename, 'rb') as infile:
+
+            reader = PdfFileReader(infile)
+            writer = PdfFileWriter()
+            writer.addPage(reader.getPage(0))
+            print(reader.numPages)
+            for i in range(1, reader.numPages+1):
+                outfile_name = os.path.join(
+                    str(folder),
+                    os.path.splitext(filename)[0] + '_' + str(i) + '.pdf'
+                )
+                with open(outfile_name, 'wb') as outfile:
+                    writer.write(outfile)
 
     def __init__(self):
         self.input_files = None
