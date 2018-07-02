@@ -1,4 +1,5 @@
 from tkinter import Frame, Button, Tk
+from tkinter.ttk import Notebook, Frame
 from tkinter.filedialog import askopenfilenames, asksaveasfilename
 
 from Converter import Converter
@@ -29,12 +30,13 @@ class PdfWorks(Frame):
 
     def __init__(self, master=None):
 
-        Frame.__init__(self, master, width=230)
+        Frame.__init__(self, master)
         self.grid()
         self.files_list = None
-        self.loadButton = Button(master, text="Выбрать файлы", command=self.show_load_dialog)
+        self.columnconfigure(0, weight=1)
+        self.loadButton = Button(self, text="Выбрать файлы", command=self.show_load_dialog)
         self.loadButton.grid(sticky="we")
-        self.convertButton = Button(master, text="Конвертировать", command=self.show_save_dialog, state='disabled')
+        self.convertButton = Button(self, text="Конвертировать", command=self.show_save_dialog, state='disabled')
         self.convertButton.grid(sticky="we")
 
         self.converter = Converter()
@@ -48,9 +50,16 @@ if __name__ == "__main__":
     root = Tk()
     root.iconbitmap(r'assets\favicon.ico')
     root.title("PDF Works")
+    rows = 0
+    root.columnconfigure(rows, weight=1)
+    root.rowconfigure(rows, weight=1)
+
+    notebook = Notebook(width=230)
+    notebook.grid(sticky='NEWS')
 
     pdfworks = PdfWorks()
-    pdfworks.mainloop()
+    notebook.add(pdfworks, text='Склеить')
+
+    root.mainloop()
     # TODO: разделение pdf на разные страницы
     # TODO: несколько вкладок (по функциям)
-
