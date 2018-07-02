@@ -23,9 +23,9 @@ class PickAndConvertFrame(Frame):
 
     def show_save_dialog(self):
 
-        folder_name = askdirectory()
-        if folder_name:
-            self.converter.convert(folder_name)
+        filename = asksaveasfilename(**self.save_options)
+        if filename:
+            self.converter.convert(filename)
 
     def __init__(self, master=None):
 
@@ -39,8 +39,8 @@ class PickAndConvertFrame(Frame):
         self.convertButton.grid(sticky="we")
 
         self.converter = Converter()
-        #self.save_options = dict(defaultextension='.pdf',
-        #                         filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
+        self.save_options = dict(defaultextension='.pdf',
+                                 filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
         # TODO add open_options
 
 
@@ -56,16 +56,14 @@ class PickAndSplitFrame(Frame):
         if self.file_name:
             self.splitButton['state'] = 'normal'
             self.converter.set_input_files(self.file_name)
-            self.loadButton['text'] = "Файлов выбрано: " + str(len(self.file_name))
         else:
             self.splitButton['state'] = 'disabled'
-            self.loadButton['text'] = "Выбрать файлы"
 
     def show_save_dialog(self):
 
-        filename = asksaveasfilename(**self.save_options)
-        if filename:
-            self.converter.convert(filename)
+        folder_name = askdirectory()
+        if folder_name:
+            self.converter.split(self.file_name, folder_name)
 
     def __init__(self, master=None):
 
