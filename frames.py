@@ -1,5 +1,5 @@
 from tkinter.ttk import Frame, Button
-from tkinter.filedialog import askopenfilenames, asksaveasfilename
+from tkinter.filedialog import askopenfilenames, asksaveasfilename, askopenfilename, askdirectory
 
 from Converter import Converter
 
@@ -23,9 +23,9 @@ class PickAndConvertFrame(Frame):
 
     def show_save_dialog(self):
 
-        filename = asksaveasfilename(**self.save_options)
-        if filename:
-            self.converter.convert(filename)
+        folder_name = askdirectory()
+        if folder_name:
+            self.converter.convert(folder_name)
 
     def __init__(self, master=None):
 
@@ -37,6 +37,46 @@ class PickAndConvertFrame(Frame):
         self.loadButton.grid(sticky="we")
         self.convertButton = Button(self, text="Конвертировать", command=self.show_save_dialog, state='disabled')
         self.convertButton.grid(sticky="we")
+
+        self.converter = Converter()
+        #self.save_options = dict(defaultextension='.pdf',
+        #                         filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
+        # TODO add open_options
+
+
+class PickAndSplitFrame(Frame):
+
+    def show_load_dialog(self):
+
+        # TODO set datatypes supported (from Converter class)
+        file_name_temp = askopenfilename()
+        if file_name_temp:
+            self.file_name = file_name_temp
+
+        if self.file_name:
+            self.splitButton['state'] = 'normal'
+            self.converter.set_input_files(self.file_name)
+            self.loadButton['text'] = "Файлов выбрано: " + str(len(self.file_name))
+        else:
+            self.splitButton['state'] = 'disabled'
+            self.loadButton['text'] = "Выбрать файлы"
+
+    def show_save_dialog(self):
+
+        filename = asksaveasfilename(**self.save_options)
+        if filename:
+            self.converter.convert(filename)
+
+    def __init__(self, master=None):
+
+        Frame.__init__(self, master)
+        self.grid()
+        self.file_name = None
+        self.columnconfigure(0, weight=1)
+        self.loadButton = Button(self, text="Выбрать файл", command=self.show_load_dialog)
+        self.loadButton.grid(sticky="we")
+        self.splitButton = Button(self, text="Разделить", command=self.show_save_dialog, state='disabled')
+        self.splitButton.grid(sticky="we")
 
         self.converter = Converter()
         self.save_options = dict(defaultextension='.pdf',
