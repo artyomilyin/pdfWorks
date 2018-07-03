@@ -2,7 +2,7 @@ from cx_Freeze import setup, Executable
 
 base = None
 
-executables = [Executable("Converter.py", base=base)]
+executables = [Executable("converter.py", base=base)]
 
 packages = ["idna", "PyPDF2", "img2pdf", "os", "shutil", "datetime"]
 options = {

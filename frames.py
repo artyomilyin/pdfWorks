@@ -1,7 +1,7 @@
 from tkinter.ttk import Frame, Button
 from tkinter.filedialog import askopenfilenames, asksaveasfilename, askopenfilename, askdirectory
 
-from Converter import Converter
+from converter import Converter
 
 
 class PickAndConvertFrame(Frame):
