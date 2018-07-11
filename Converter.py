@@ -22,8 +22,8 @@ class Converter:
             os.makedirs('temp')
 
         for file in files_list:
-            if file.endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS)):
-                new_filename = os.path.join("temp", file+'.pdf')
+            if file.lower().endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS)):
+                new_filename = os.path.join("temp", ntpath.split(file)[1]+'.pdf')
                 with open(os.path.join("INPUT", file), 'rb') as r, open(new_filename, 'wb') as w:
                     try:
                         w.write(img2pdf.convert(r, layout_fun=self.layout_fun))
@@ -55,9 +55,9 @@ class Converter:
         with open(filename, 'rb') as infile:
 
             reader = PdfFileReader(infile)
-            writer = PdfFileWriter()
-            #writer.addPage(reader.getPage(0))
             for i in range(1, reader.numPages+1):
+                writer = PdfFileWriter()
+                writer.addPage(reader.getPage(i-1))
                 outfile_name = os.path.join(
                     folder,
                     os.path.splitext(ntpath.split(filename)[1])[0] + '_' + str(i) + '.pdf'
