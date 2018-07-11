@@ -56,13 +56,13 @@ class Converter:
 
             reader = PdfFileReader(infile)
             writer = PdfFileWriter()
-            writer.addPage(reader.getPage(0))
-            print(reader.numPages)
+            #writer.addPage(reader.getPage(0))
             for i in range(1, reader.numPages+1):
                 outfile_name = os.path.join(
-                    str(folder),
-                    os.path.splitext(filename)[0] + '_' + str(i) + '.pdf'
+                    folder,
+                    os.path.splitext(ntpath.split(filename)[1])[0] + '_' + str(i) + '.pdf'
                 )
+                print(outfile_name)
                 with open(outfile_name, 'wb') as outfile:
                     writer.write(outfile)
 
