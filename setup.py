@@ -33,7 +33,7 @@ shortcut = [
      )
     ]
 
-packages = ["tkinter", "PyPDF2", "img2pdf", "os", "shutil", "datetime", "ntpath"]
+packages = ["tkinter", "PyPDF2", "img2pdf", "os", "shutil", "datetime", "ntpath", "sys"]
 
 options = {
     'build_exe': {
