@@ -39,7 +39,7 @@ class Converter:
 
         merger = PdfFileMerger()
 
-        for file in self.FINAL_LIST:
+        for file in sorted(list(self.FINAL_LIST)):
             self.FILE_HANDLES.append(open(file, 'rb'))
             merger.append(self.FILE_HANDLES[-1])
 
