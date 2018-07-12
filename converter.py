@@ -24,15 +24,15 @@ class Converter:
         for file in files_list:
             if file.lower().endswith(tuple(self.SUPPORTED_IMAGE_FILE_FORMATS)):
                 new_filename = os.path.join("temp", ntpath.split(file)[1]+'.pdf')
-                with open(os.path.join("INPUT", file), 'rb') as r, open(new_filename, 'wb') as w:
+                with open(file, 'rb') as r, open(new_filename, 'wb') as w:
                     try:
                         w.write(img2pdf.convert(r, layout_fun=self.layout_fun))
                     except TypeError as e:
                         print(e)
-                self.FINAL_LIST.append(new_filename)
+                self.FINAL_LIST.add(new_filename)
 
             if file.endswith('.pdf'):
-                self.FINAL_LIST.append(os.path.join("input", file))
+                self.FINAL_LIST.add(file)
 
     def convert(self, filename):
 
@@ -47,6 +47,8 @@ class Converter:
 
         for handle in self.FILE_HANDLES:
             handle.close()
+
+        self.FINAL_LIST = set()
 
         shutil.rmtree('temp', ignore_errors=True)
 
@@ -71,7 +73,7 @@ class Converter:
         self.a4inpt = (img2pdf.mm_to_pt(210), img2pdf.mm_to_pt(297))
         self.layout_fun = img2pdf.get_layout_fun(self.a4inpt)
         self.FILE_HANDLES = []
-        self.FINAL_LIST = []
+        self.FINAL_LIST = set()
         self.INPUT_LIST = []
 
 
