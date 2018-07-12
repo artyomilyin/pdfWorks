@@ -13,6 +13,7 @@ if __name__ == "__main__":
     root.title("PDF Works")
     root.columnconfigure(rows, weight=1)
     root.rowconfigure(rows, weight=1)
+    root.resizable(False, False)
 
     notebook = Notebook(width=230)
     notebook.grid(sticky='NEWS')
