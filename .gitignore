@@ -3,7 +3,6 @@
 __pycache__/
 *.pyc
 *.log
-input/
-output/
 temp/
 build/
+dist/
