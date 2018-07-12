@@ -35,7 +35,7 @@ class PickAndConvertFrame(Frame):
         self.columnconfigure(0, weight=1)
         self.loadButton = Button(self, text="Выбрать файлы", command=self.show_load_dialog)
         self.loadButton.grid(sticky="we")
-        self.convertButton = Button(self, text="Конвертировать", command=self.show_save_dialog, state='disabled')
+        self.convertButton = Button(self, text="Склеить", command=self.show_save_dialog, state='disabled')
         self.convertButton.grid(sticky="we")
 
         self.converter = Converter()
