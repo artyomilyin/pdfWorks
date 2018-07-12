@@ -16,7 +16,7 @@ executables = [Executable(
     base=base,
     icon='assets/favicon.ico',
 )]
-
+# TODO: опасное ПО при установке
 shortcut = [
     ("DesktopShortcut",         # Shortcut
      "DesktopFolder",           # Directory_
