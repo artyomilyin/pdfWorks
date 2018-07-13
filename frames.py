@@ -8,8 +8,7 @@ class PickAndConvertFrame(Frame):
 
     def show_load_dialog(self):
 
-        # TODO set datatypes supported (from Converter class)
-        files_list_temp = askopenfilenames()
+        files_list_temp = askopenfilenames(**self.load_options)
         if files_list_temp:
             self.files_list = files_list_temp
 
@@ -39,9 +38,20 @@ class PickAndConvertFrame(Frame):
         self.convertButton.grid(sticky="we")
 
         self.converter = Converter()
-        self.save_options = dict(defaultextension='.pdf',
-                                 filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
-        # TODO add open_options
+
+        self.image_formats = '; '.join(['*' + x for x in self.converter.SUPPORTED_IMAGE_FILE_FORMATS])
+        self.pdf_and_image_formats = '; '.join([self.image_formats] + ['*.pdf'])
+        self.load_options = dict(
+            filetypes=[
+                ('PDF and IMAGE files (' + self.pdf_and_image_formats + ')', self.pdf_and_image_formats),
+                ('PDF files', '*.pdf'),
+                ('IMAGE files (' + self.image_formats + ')', self.image_formats),
+                ('All files', '*.*')
+            ])
+        self.save_options = dict(
+            defaultextension='.pdf', # TODO: doesn't work
+            filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')]
+        )
 
 
 class PickAndSplitFrame(Frame):
@@ -49,7 +59,7 @@ class PickAndSplitFrame(Frame):
     def show_load_dialog(self):
 
         # TODO set datatypes supported (from Converter class)
-        file_name_temp = askopenfilename()
+        file_name_temp = askopenfilename(**self.load_options)
         if file_name_temp:
             self.file_name = file_name_temp
 
@@ -77,6 +87,4 @@ class PickAndSplitFrame(Frame):
         self.splitButton.grid(sticky="we")
 
         self.converter = Converter()
-        self.save_options = dict(defaultextension='.pdf',
-                                 filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
-        # TODO add open_options
+        self.load_options = dict(filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
