@@ -1,0 +1,3 @@
+[submodule "pdfworks-lib"]
+	path = pdfworks-lib
+	url = https://artyom_ilyin@bitbucket.org/artyom_ilyin/pdfworks-lib.git
