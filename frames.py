@@ -1,7 +1,7 @@
 from tkinter.ttk import Frame, Button
 from tkinter.filedialog import askopenfilenames, asksaveasfilename, askopenfilename, askdirectory
 
-from converter import Converter
+from pdfworks_lib.pdfworks import Converter
 
 
 class PickAndConvertFrame(Frame):
