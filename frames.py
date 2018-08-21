@@ -1,4 +1,4 @@
-from tkinter.ttk import Frame, Button
+from tkinter.ttk import Frame, Button, Label
 from tkinter.filedialog import askopenfilenames, asksaveasfilename, askopenfilename, askdirectory
 
 from pdfworks_lib.pdfworks import Converter
@@ -15,7 +15,7 @@ class PickAndConvertFrame(Frame):
         if self.files_list:
             self.convertButton['state'] = 'normal'
             self.converter.set_input_files(self.files_list)
-            self.loadButton['text'] = "Файлов выбрано: " + str(len(self.files_list))
+            self.statusLabel['text'] = "Файлов выбрано: " + str(len(self.files_list)) + ". Можно клеить."
         else:
             self.convertButton['state'] = 'disabled'
             self.loadButton['text'] = "Выбрать файлы"
@@ -25,6 +25,7 @@ class PickAndConvertFrame(Frame):
         filename = asksaveasfilename(**self.save_options)
         if filename:
             self.converter.convert(filename)
+            self.statusLabel['text'] = "Склеено!"
 
     def __init__(self, master=None):
 
@@ -36,6 +37,8 @@ class PickAndConvertFrame(Frame):
         self.loadButton.grid(sticky="we")
         self.convertButton = Button(self, text="Склеить", command=self.show_save_dialog, state='disabled')
         self.convertButton.grid(sticky="we")
+        self.statusLabel = Label(self, text="")
+        self.statusLabel.grid(sticky="ws")
 
         self.converter = Converter()
 
@@ -66,6 +69,7 @@ class PickAndSplitFrame(Frame):
         if self.file_name:
             self.splitButton['state'] = 'normal'
             self.converter.set_input_files(self.file_name)
+            self.statusLabel['text'] = "Файл выбран. Можно разделять."
         else:
             self.splitButton['state'] = 'disabled'
 
@@ -74,6 +78,7 @@ class PickAndSplitFrame(Frame):
         folder_name = askdirectory()
         if folder_name:
             self.converter.split(self.file_name, folder_name)
+            self.statusLabel['text'] = "Разделено!"
 
     def __init__(self, master=None):
 
@@ -85,6 +90,8 @@ class PickAndSplitFrame(Frame):
         self.loadButton.grid(sticky="we")
         self.splitButton = Button(self, text="Разделить", command=self.show_save_dialog, state='disabled')
         self.splitButton.grid(sticky="we")
+        self.statusLabel = Label(self, text="")
+        self.statusLabel.grid(sticky="ws")
 
         self.converter = Converter()
         self.load_options = dict(filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')])
