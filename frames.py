@@ -1,7 +1,7 @@
 from tkinter.ttk import Frame, Button, Label
 from tkinter.filedialog import askopenfilenames, asksaveasfilename, askopenfilename, askdirectory
 
-from pdfworks_lib.pdfworks import Converter
+from pdfworks_lib.pdfworks import Converter, split_pdf
 
 
 class PickAndConvertFrame(Frame):
@@ -77,7 +77,7 @@ class PickAndSplitFrame(Frame):
 
         folder_name = askdirectory()
         if folder_name:
-            self.converter.split(self.file_name, folder_name)
+            split_pdf(self.file_name, folder_name)
             self.statusLabel['text'] = "Разделено!"
 
     def __init__(self, master=None):
