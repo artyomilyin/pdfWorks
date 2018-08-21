@@ -22,6 +22,7 @@ class PickAndConvertFrame(Frame):
     def show_save_dialog(self):
 
         filename = asksaveasfilename(**self.save_options)
+        # TODO: restrict input_files from being output_file at the same time
         if filename:
             self.converter.convert(self.files_list, filename)
             self.statusLabel['text'] = "Склеено!"
