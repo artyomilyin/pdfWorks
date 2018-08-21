@@ -14,7 +14,6 @@ class PickAndConvertFrame(Frame):
 
         if self.files_list:
             self.convertButton['state'] = 'normal'
-            self.converter.set_input_files(self.files_list)
             self.statusLabel['text'] = "Файлов выбрано: " + str(len(self.files_list)) + ". Можно клеить."
         else:
             self.convertButton['state'] = 'disabled'
@@ -24,7 +23,7 @@ class PickAndConvertFrame(Frame):
 
         filename = asksaveasfilename(**self.save_options)
         if filename:
-            self.converter.convert(filename)
+            self.converter.convert(self.files_list, filename)
             self.statusLabel['text'] = "Склеено!"
 
     def __init__(self, master=None):
@@ -52,7 +51,7 @@ class PickAndConvertFrame(Frame):
                 ('All files', '*.*')
             ])
         self.save_options = dict(
-            defaultextension='.pdf', # TODO: doesn't work
+            defaultextension='.pdf',  # TODO: doesn't work
             filetypes=[('PDF file', '*.pdf'), ('All files', '*.*')]
         )
 
@@ -68,7 +67,6 @@ class PickAndSplitFrame(Frame):
 
         if self.file_name:
             self.splitButton['state'] = 'normal'
-            self.converter.set_input_files(self.file_name)
             self.statusLabel['text'] = "Файл выбран. Можно разделять."
         else:
             self.splitButton['state'] = 'disabled'
