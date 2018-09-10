@@ -26,12 +26,12 @@ class SplitTab(wx.Panel):
 
 class MainFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="pdfWorks", size=wx.Size(270, -1),
+        wx.Frame.__init__(self, None, title="pdfWorks",
                           style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX)
         self.SetIcon(wx.Icon('assets/favicon.ico'))
 
         panel = wx.Panel(self)
-        notebook = wx.Notebook(panel)
+        notebook = wx.Notebook(panel, size=wx.Size(250, -1))
 
         convert_and_merge_tab = ConvertAndMergeTab(notebook)
         split_tab = SplitTab(notebook)
@@ -40,14 +40,12 @@ class MainFrame(wx.Frame):
         notebook.AddPage(split_tab, "Разделить")
 
         sizer = wx.BoxSizer()
-        sizer.Add(notebook, 1, wx.EXPAND)
-        #print(notebook.GetBestSize())
-
         panel.SetSizer(sizer)
-        sizer.Layout()
+        sizer.Add(notebook)
 
         self.status_bar = self.CreateStatusBar(1)
         self.status_bar.SetStatusText('Выберите или перенесите в окно файлы')
+        sizer.SetSizeHints(self)
 
 
 if __name__ == "__main__":
