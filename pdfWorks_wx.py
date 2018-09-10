@@ -1,16 +1,24 @@
-from tkinter import Tk
-from tkinter.ttk import Notebook
 import wx
-from frames_wx import PickAndConvertFrame, PickAndSplitFrame
 
 
-class TabOne(wx.Panel):
+# Define the tab content as classes:
+class ConvertAndMergeTab(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
-        t = wx.StaticText(self, -1, "This is the first tab", (20, 20))
+
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        self.SetSizer(sizer)
+
+        select_files_button = wx.Button(self, label="Выбрать файлы", size=wx.Size(wx.EXPAND, -1))
+        sizer.Add(select_files_button)
+
+        convert_and_merge_button = wx.Button(self, label="Склеить", size=wx.Size(wx.EXPAND, -1))
+        convert_and_merge_button.Disable()
+        sizer.Add(convert_and_merge_button)
 
 
-class TabTwo(wx.Panel):
+
+class SplitTab(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
         t = wx.StaticText(self, -1, "This is the second tab", (20, 20))
@@ -18,56 +26,31 @@ class TabTwo(wx.Panel):
 
 class MainFrame(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, None, title="pdfWorks")
-        icon = wx.Icon()
-        icon.CopyFromBitmap(wx.Bitmap('assets/favicon.ico', wx.BITMAP_TYPE_ANY))
-        self.SetIcon(icon)
+        wx.Frame.__init__(self, None, title="pdfWorks", size=wx.Size(270, -1),
+                          style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX)
+        self.SetIcon(wx.Icon('assets/favicon.ico'))
 
         panel = wx.Panel(self)
         notebook = wx.Notebook(panel)
 
-        pick_and_convert_frame = PickAndConvertFrame(notebook)
-        pick_and_split_frame = TabTwo(notebook)
+        convert_and_merge_tab = ConvertAndMergeTab(notebook)
+        split_tab = SplitTab(notebook)
 
-        notebook.AddPage(pick_and_convert_frame, "Склеить")
-        notebook.AddPage(pick_and_split_frame, "Разделить")
+        notebook.AddPage(convert_and_merge_tab, "Склеить")
+        notebook.AddPage(split_tab, "Разделить")
 
         sizer = wx.BoxSizer()
         sizer.Add(notebook, 1, wx.EXPAND)
-        sizer.Layout()
+        #print(notebook.GetBestSize())
+
         panel.SetSizer(sizer)
+        sizer.Layout()
+
+        self.status_bar = self.CreateStatusBar(1)
+        self.status_bar.SetStatusText('Выберите или перенесите в окно файлы')
 
 
 if __name__ == "__main__":
-
-    """rows = 0
-
-    root = Tk()
-    
-    root.columnconfigure(rows, weight=1)
-    root.rowconfigure(rows, weight=1)
-    root.resizable(False, False)
-
-    notebook = Notebook(width=230)
-    notebook.grid(sticky='NEWS')
-
-    pick_and_convert_frame = PickAndConvertFrame()
-    notebook.add(pick_and_convert_frame, text='Склеить')
-
-    pick_and_split_frame = PickAndSplitFrame()
-    notebook.add(pick_and_split_frame, text='Разделить')
-
-    root.mainloop()
-"""
-
-    # Define the tab content as classes:
-
-
     app = wx.App()
     MainFrame().Show()
     app.MainLoop()
-
-
-    # TODO: разделение pdf на разные страницы
-    # TODO: несколько вкладок (по функциям)
-    # TODO: drag'n'drop feature
