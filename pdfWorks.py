@@ -51,6 +51,12 @@ class ConvertAndMergeTab(wx.Panel):
         with wx.FileDialog(self, "Сохранить", wildcard=self.save_options,
                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             if fileDialog.ShowModal() != wx.ID_CANCEL:
+                merge_file = fileDialog.GetPath()
+                if merge_file in self.files_list:
+                    wx.MessageBox('Выбранный файл является входным. Нужно выбрать другой.',
+                                  'Error', wx.OK | wx.ICON_INFORMATION)
+                    return
+                self.converter(self.files_list, merge_file)
                 self.status_bar.SetStatusText("Работаем...")
                 self.converter.convert(self.files_list, fileDialog.GetPath())
                 self.status_bar.SetStatusText("Склеено!")
