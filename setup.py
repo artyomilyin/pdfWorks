@@ -1,10 +1,6 @@
 from cx_Freeze import setup, Executable
-import os
 import sys
 
-
-os.environ['TCL_LIBRARY'] = 'C:/Users/aailyin/AppData/Local/Programs/Python/Python36-32/tcl/tcl8.6'
-os.environ['TK_LIBRARY'] = 'C:/Users/aailyin/AppData/Local/Programs/Python/Python36-32/tcl/tk8.6'
 
 base = None
 
@@ -33,12 +29,12 @@ shortcut = [
      )
     ]
 
-packages = ["tkinter", "PyPDF2", "img2pdf", "os", "shutil", "datetime", "ntpath", "sys"]
+packages = ["pdfworks_lib", "wx", "itertools", "PyPDF2", "img2pdf", "os", "shutil", "datetime", "ntpath", "sys"]
 
 options = {
     'build_exe': {
         'packages': packages,
-        'include_files': ["assets/", "DDLs/tcl86t.dll", "DDLs/tk86t.dll"],
+        'include_files': ["assets/"],
     },
     'bdist_msi': {
         'data': {"Shortcut": shortcut},
@@ -47,8 +43,9 @@ options = {
 
 setup(
     name="pdfWorks",
+    author="Artyom ILYIN",
     options=options,
-    version="0.1.2",
-    description='',
+    version="0.1.3",
+    description='pdfWorks',
     executables=executables
 )
