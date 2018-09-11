@@ -45,9 +45,6 @@ class ConvertAndMergeTab(wx.Panel):
                 self.status_bar.SetStatusText("Файлов выбрано: %d. Можно клеить." % len(self.files_list))
 
     def convert_and_merge(self, event):
-        # TODO: autoextension doesn't work
-        # TODO: restrict input_files from being output_file at the same time
-
         with wx.FileDialog(self, "Сохранить", wildcard=self.save_options,
                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             if fileDialog.ShowModal() != wx.ID_CANCEL:
@@ -101,9 +98,6 @@ class SplitTab(wx.Panel):
                 self.status_bar.SetStatusText("Файл выбран. Можно делить.")
 
     def split_file(self, event):
-
-        # TODO: restrict input_files from being output_file at the same time
-
         with wx.DirDialog(self, "Выбрать дирректорию", style=wx.DD_DIR_MUST_EXIST) as directoryDialog:
             if directoryDialog.ShowModal() != wx.ID_CANCEL:
                 self.status_bar.SetStatusText("Работаем...")
