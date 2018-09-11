@@ -13,7 +13,7 @@ class FileDropTarget(wx.FileDropTarget):
 
     def OnDropFiles(self, x, y, all_rows_list):
         if self.single:
-            files_list = [x for x in all_rows_list if not os.path.isdir(x) and os.path.splitext(x)[1] != '.pdf']
+            files_list = [x for x in all_rows_list if not os.path.isdir(x) and os.path.splitext(x)[1] == '.pdf']
             if files_list:
                 if len(files_list) > 1:
                     self.window.status_bar.SetStatusText("Нужно только один файл!")
