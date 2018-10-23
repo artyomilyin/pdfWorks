@@ -53,9 +53,10 @@ class ConvertAndMergeTab(wx.Panel):
                     wx.MessageBox('Выбранный файл является входным. Нужно выбрать другой.',
                                   'Error', wx.OK | wx.ICON_INFORMATION)
                     return
-                self.converter(self.files_list, merge_file)
+                #self.converter(self.files_list, merge_file)
                 self.status_bar.SetStatusText("Работаем...")
-                self.converter.convert(self.files_list, fileDialog.GetPath())
+                #self.converter.convert(self.files_list, fileDialog.GetPath())
+                self.converter.convert(self.files_list, merge_file)
                 self.status_bar.SetStatusText("Склеено!")
 
     def __init__(self, parent, converter, status_bar):
