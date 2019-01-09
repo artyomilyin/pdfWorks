@@ -56,8 +56,11 @@ class ConvertAndMergeTab(wx.Panel):
                 #self.converter(self.files_list, merge_file)
                 self.status_bar.SetStatusText("Работаем...")
                 #self.converter.convert(self.files_list, fileDialog.GetPath())
-                self.converter.convert(self.files_list, merge_file)
-                self.status_bar.SetStatusText("Склеено!")
+                try:
+                    self.converter.convert(self.files_list, merge_file)
+                    self.status_bar.SetStatusText("Склеено!")
+                except:
+                    self.status_bar.SetStatusText("Произошла ошибка ¯\_(ツ)_/¯")
 
     def __init__(self, parent, converter, status_bar):
 
