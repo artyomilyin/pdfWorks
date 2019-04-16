@@ -9,6 +9,7 @@ class FileDropTarget(wx.FileDropTarget):
     def __init__(self, window, single=False):
         wx.FileDropTarget.__init__(self)
         self.window = window
+        # single defines if multiple files could be drag'n'dropped to the window
         self.single = single
 
     def OnDropFiles(self, x, y, all_rows_list):
@@ -25,7 +26,9 @@ class FileDropTarget(wx.FileDropTarget):
                     return True
             return False
         else:
-            files_list = [x for x in all_rows_list if not os.path.isdir(x) and os.path.splitext(x)[1] in itertools.chain(self.window.converter.SUPPORTED_IMAGE_FILE_FORMATS, ['.pdf'])]
+            files_list = [x for x in all_rows_list if
+                          not os.path.isdir(x) and os.path.splitext(x)[1] in itertools.chain(
+                              self.window.converter.SUPPORTED_IMAGE_FILE_FORMATS, ['.pdf'])]
             if files_list:
                 self.window.files_list = files_list
                 self.window.convert_and_merge_button.Enable()
@@ -45,18 +48,22 @@ class ConvertAndMergeTab(wx.Panel):
                 self.status_bar.SetStatusText("Файлов выбрано: %d. Можно клеить." % len(self.files_list))
 
     def convert_and_merge(self, event):
+        # pick the output file
         with wx.FileDialog(self, "Сохранить", wildcard=self.save_options,
                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
             if fileDialog.ShowModal() != wx.ID_CANCEL:
+                # if file was picked
                 merge_file = fileDialog.GetPath()
+                # chosen file should not be in input files at the same time, it'll cause error
                 if merge_file in self.files_list:
                     wx.MessageBox('Выбранный файл является входным. Нужно выбрать другой.',
                                   'Error', wx.OK | wx.ICON_INFORMATION)
                     return
-                #self.converter(self.files_list, merge_file)
+                # self.converter(self.files_list, merge_file)
                 self.status_bar.SetStatusText("Работаем...")
-                #self.converter.convert(self.files_list, fileDialog.GetPath())
+                # self.converter.convert(self.files_list, fileDialog.GetPath())
                 try:
+                    # converting and merging
                     self.converter.convert(self.files_list, merge_file)
                     self.status_bar.SetStatusText("Склеено!")
                 except:
@@ -76,6 +83,7 @@ class ConvertAndMergeTab(wx.Panel):
         self.save_options = "PDF files |*.pdf"
         self.files_list = None
 
+        # make this tab drag'n'drop-able, accept single or multiple files
         self.SetDropTarget(FileDropTarget(self))
 
         sizer = wx.BoxSizer(wx.VERTICAL)
@@ -116,8 +124,10 @@ class SplitTab(wx.Panel):
         self.load_options = "PDF files |*.pdf"
         self.file_name = None
 
+        # make this tab drag'n'drop-able, accept only single file
         self.SetDropTarget(FileDropTarget(self, single=True))
 
+        # filling the grid for Split File tab
         sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(sizer)
 
@@ -133,11 +143,13 @@ class SplitTab(wx.Panel):
 
 class MainFrame(wx.Frame):
     def __init__(self):
+        # initialize MainFrame
         wx.Frame.__init__(self, None, title="pdfWorks",
                           style=wx.DEFAULT_FRAME_STYLE ^ wx.RESIZE_BORDER ^ wx.MAXIMIZE_BOX)
         self.SetIcon(wx.Icon('assets/favicon.ico'))
         self.converter = Converter()
 
+        # filling the grid for the app
         panel = wx.Panel(self)
         notebook = wx.Notebook(panel, size=wx.Size(250, -1))
 
