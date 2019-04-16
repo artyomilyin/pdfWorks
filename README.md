@@ -5,8 +5,10 @@ based on `pdfWorks-lib`'s tools written on `python` using `wxPython`.
 
 There are two tabs for each tool:
 
-![Screenshot_ConvertAndMerge](assets/Screenshot_ConvertAndMergeTab.png.png)
-![Screenshot_Split](assets/Screenshot_SplitTab.png.png)
+![Screenshot_ConvertAndMerge](assets/Screenshot_ConvertAndMergeTab.png)
+![Screenshot_Split](assets/Screenshot_SplitTab.png)
+
+Yes, the language is Russian only.
 
 ### Convert tab
 Pick the files from browsing window or drag'n'drop them on the app. 
