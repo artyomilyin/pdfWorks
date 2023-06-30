@@ -1,7 +1,7 @@
 cx-Freeze==5.1.1
 img2pdf==0.3.1
 Pillow==8.1.1
-PyPDF2==1.26.0
+PyPDF2==1.27.9
 Pypubsub==4.0.0
 six==1.11.0
 wxPython==4.0.3
